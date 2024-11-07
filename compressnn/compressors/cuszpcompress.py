@@ -6,6 +6,18 @@ import cuszp
 from compressnn.utils import contiguous_float32_check, CompressedElement
 from compressnn.compressors.compressor import Compressor
 
+'''
+PyTorch-based implementation of the cuSZp compressor from https://github.com/szcompressor/cuSZp.
+Overrides compress() and decompress() from parent class Compressor
+
+__init__ Arguments:
+- name: compressor name (str)
+- err_mode: cuSZp error bound mode (str)
+- compress_check: function header that returns true when an activation should be compressed (function)
+- free_space: Will delete original data during compression and compressed data during decompression if True (bool)
+- get_debug: Prints debug information (bool)
+
+'''
 class CUSZpCompressor(Compressor):
     def __init__(self, name="", err_mode="rel", err_bound=1e-3, compress_check=contiguous_float32_check, free_space=True, get_debug=False):
         super().__init__(name)        
@@ -15,12 +27,7 @@ class CUSZpCompressor(Compressor):
         self.free_space = free_space
         self.get_debug=get_debug
 
-    def increment_tcount(self):
-        self.tensor_count += 1
-    
-    def reset_tcount(self):
-        self.tensor_count = 0
-
+    ### Compresses input tensor x if passes compress_check
     def compress(self, x):
         data = None
         if self.compress_check(x):
@@ -37,6 +44,7 @@ class CUSZpCompressor(Compressor):
         self.increment_tcount()
         return data
     
+    ### Decompresses input tensor x if CompressedElement that was used by this compressor
     def decompress(self, x):
         data = None
         if isinstance(x, CompressedElement):

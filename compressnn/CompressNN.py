@@ -6,6 +6,17 @@ import torch.nn as nn
 
 from compressnn.utils import contiguous_float32_check
 
+'''
+Wraps a PyTorch module and compresses activations
+
+__init__ Arguments:
+- compressor: compressor name (str)
+- err_mode: cuSZp error bound mode (str)
+- err_bound: cuSZp error bound (float)
+- compress_check: function header that returns true when an activation should be compressed (function)
+- free_space: Frees original and compressed data appropriately (bool)
+- get_debug: Print debug information (bool)
+'''
 class CompressNNModel(nn.Module):
     def __init__(self, model, compressor="cuszp", err_mode="rel", err_bound=1e-3, compress_check=contiguous_float32_check, free_space=True, get_debug=False):
         super(CompressNNModel, self).__init__()

@@ -1,22 +1,26 @@
 import sys
 sys.path.append("..")
 import torch
-import cuszp
 
 from utils import contiguous_float32_check, CompressedElement
 from compressor import Compressor
+
+'''
+CPU "compressor" that moves data to and from device memory. Does not actually compress the data.
+Overrides compress() and decompress() from parent class Compressor
+
+__init__ Arguments:
+- name: compressor name (str)
+- compress_check: function header that returns true when an activation should be compressed (function)
+
+'''
 
 class CPUCompressor(Compressor):
     def __init__(self, name="", compress_check=contiguous_float32_check):
         super(Compressor, self).__init__(name)        
         self.compress_check = compress_check
 
-    def increment_tcount(self):
-        self.tensor_count += 1
-    
-    def reset_tcount(self):
-        self.tensor_count = 0
-
+    ### Moves input tensor x to CPU if passes compress_check
     def compress(self, x):
         data = None
         if self.compress_check(x):
@@ -27,6 +31,7 @@ class CPUCompressor(Compressor):
         self.increment_tcount()
         return data
     
+    ### Moves input tensor x to GPU if passes compress_check
     def decompress(self, x):
         data = None
         if isinstance(x, CompressedElement):

@@ -4,9 +4,11 @@ class Compressor():
         self.name = name
         self.tensor_count = 0
     
+    ### Counter for tensors processed
     def increment_tcount(self):
         self.tensor_count += 1
     
+    ### Reset the counter
     def reset_tcount(self):
         self.tensor_count = 0
 
