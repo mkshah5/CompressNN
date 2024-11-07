@@ -7,12 +7,12 @@ import torch.nn as nn
 from compressnn.utils import contiguous_float32_check
 
 class CompressNNModel(nn.Module):
-    def __init__(self, model, compressor="cuszp", err_mode="rel", err_bound=1e-3, compress_check=contiguous_float32_check, free_space=True):
+    def __init__(self, model, compressor="cuszp", err_mode="rel", err_bound=1e-3, compress_check=contiguous_float32_check, free_space=True, get_debug=False):
         super(CompressNNModel, self).__init__()
         self.internal_model = model
         if compressor=="cuszp":
             from compressnn.compressors.cuszpcompress import CUSZpCompressor
-            self.compressor = CUSZpCompressor(compressor, err_mode, err_bound, compress_check, free_space)
+            self.compressor = CUSZpCompressor(compressor, err_mode, err_bound, compress_check, free_space, get_debug)
         elif compressor=="cpu":
             from compressnn.compressors.cpucompress import CPUCompressor
             self.compressor = CPUCompressor(compressor, compress_check)
