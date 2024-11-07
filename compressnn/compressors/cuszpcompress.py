@@ -3,12 +3,12 @@ sys.path.append("..")
 import torch
 import cuszp
 
-from utils import contiguous_float32_check, CompressedElement
-from compressor import Compressor
+from compressnn.utils import contiguous_float32_check, CompressedElement
+from compressnn.compressors.compressor import Compressor
 
 class CUSZpCompressor(Compressor):
     def __init__(self, name="", err_mode="rel", err_bound=1e-3, compress_check=contiguous_float32_check, free_space=True):
-        super(Compressor, self).__init__(name)        
+        super().__init__(name)        
         self.err_mode = err_mode
         self.err_bound = err_bound
         self.compress_check = compress_check
@@ -24,7 +24,7 @@ class CUSZpCompressor(Compressor):
         data = None
         if self.compress_check(x):
             data = cuszp.compress(x, self.err_bound, self.err_mode)
-            data = CompressedElement(data, x.numel(), x.shape, x.dtype, self.scheme)
+            data = CompressedElement(data, x.numel(), x.shape, x.dtype, self.name)
             if self.free_space:
                 del x
                 torch.cuda.empty_cache()

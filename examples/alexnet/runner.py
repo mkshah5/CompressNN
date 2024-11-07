@@ -1,10 +1,12 @@
-import sys
-sys.path.append("../")
+#import sys
+#sys.path.append("../")
 
 import argparse
 
 import torch
-from alexnet import MNIST, AlexNetBaseline
+from alexnet import CIFAR10, AlexNetBaseline
+
+import compressnn
 
 from compressnn.CompressNN import CompressNNModel
 from compressnn.utils import contiguous_float32_check
@@ -62,7 +64,7 @@ def train(model, train_loader, valid_loader, loss_function, optimizer):
 
 def main():
     model = AlexNetBaseline(10)
-    train_loader, valid_loader = MNIST(100)
+    train_loader, valid_loader = CIFAR10(50)
    
     model = CompressNNModel(model,"cuszp","rel",1e-3,contiguous_float32_check,True)
     loss_fn = torch.nn.CrossEntropyLoss()

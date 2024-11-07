@@ -8,14 +8,15 @@ import numpy as np
 
 NUM_CLASSES = 10
 
-def MNIST(batch_size):
-    dataset_train = datasets.MNIST(
+def CIFAR10(batch_size):
+
+    dataset_train = datasets.CIFAR10(
         root='data',
         train=True,
         download=True,
         transform=ToTensor(),
     )
-    dataset_valid = datasets.MNIST(
+    dataset_valid = datasets.CIFAR10(
         root='data',
         train=False,
         download=True,
