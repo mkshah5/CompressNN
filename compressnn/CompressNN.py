@@ -15,7 +15,11 @@ class CompressNNModel(nn.Module):
             self.compressor = CUSZpCompressor(compressor, err_mode, err_bound, compress_check, free_space)
         elif compressor=="cpu":
             from compressors.cpucompress import CPUCompressor
-            self.compresor = CPUCompressor(compressor, compress_check)
+            self.compressor = CPUCompressor(compressor, compress_check)
+        else:
+            from compressors.cpucompress import CPUCompressor
+            self.compressor = CPUCompressor(compressor, compress_check)
+
 
     def forward(self, x):
         self.compressor.reset_tcount()
