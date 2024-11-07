@@ -27,7 +27,7 @@ class CUSZpCompressor(Compressor):
             data = cuszp.compress(x, self.err_bound, self.err_mode)
             data = CompressedElement(data, x.numel(), x.shape, x.dtype, self.name)
             if self.get_debug:
-                print("Original Size (B): "+str(x.numel()*x.element_size())+"Compressed Size (B): "+str(data.compressed_data.numel()*data.compressed_data.element_size()))
+                print("Original Size (B): "+str(x.numel()*x.element_size())+", Compressed Size (B): "+str(data.compressed_data.numel()*data.compressed_data.element_size()))
             if self.free_space:
                 del x
                 torch.cuda.empty_cache()
