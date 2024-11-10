@@ -16,7 +16,7 @@ git clone https://github.com/mkshah5/CompressNN.git
 Next, install cuSZp as follows:
 
 ```
-cd ./CompressNN/external_compressors
+cd ./CompressNN/external_compressors/cuszp
 pip install .
 ```
 
