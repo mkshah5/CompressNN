@@ -1,6 +1,6 @@
 { "default": 
     {
-        "compressor": "cpu"
+        "compressor": "nocompress"
     },
   "layer_number":
     {
