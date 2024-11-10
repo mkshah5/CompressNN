@@ -63,6 +63,6 @@ def get_compressor(config, compress_check, free_space, get_debug):
         from compressnn.compressors.cpucompress import CPUCompressor
         compressor = CPUCompressor(config["compressor"], compress_check)
     else:
-        from compressnn.compressors.cpucompress import CPUCompressor
-        compressor = CPUCompressor(config["compressor"], compress_check)
+        from compressnn.compressors.nocompress import NoCompressor
+        compressor = NoCompressor(config["compressor"])
     return compressor
