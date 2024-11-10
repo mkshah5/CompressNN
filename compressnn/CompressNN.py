@@ -12,9 +12,10 @@ from compressnn.compressors.composer import Composer
 Wraps a PyTorch module and compresses activations
 
 __init__ Arguments:
+- model: torch.nn.Module to integrate compression with (torch.nn.Module)
 - compressor: compressor name (str)
-- err_mode: cuSZp error bound mode (str)
-- err_bound: cuSZp error bound (float)
+- batch_size: Batch size for training (int)
+- config_path: Path to a compression JSON configuration file (str)
 - compress_check: function header that returns true when an activation should be compressed (function)
 - free_space: Frees original and compressed data appropriately (bool)
 - get_debug: Print debug information (bool)

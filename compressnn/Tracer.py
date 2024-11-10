@@ -4,6 +4,13 @@ sys.path.append("../")
 import torch
 import torch.nn as nn
 
+'''
+Traces the model to retrieve a mapping of operator number to operator name
+
+__init__ Arguments:
+- model: torch.nn.Module to trace (torch.nn.Module)
+'''
+
 class Tracer():
     def __init__(self, model):
         super(Tracer, self).__init__()
