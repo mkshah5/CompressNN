@@ -63,10 +63,12 @@ def train(model, train_loader, valid_loader, loss_function, optimizer):
                   ' Loss: {:.4f}'.format(total_loss.item() / valid_steps))
 
 def main():
+    num_classes = 10
+    batch_size = 20
     model = AlexNetBaseline(10)
-    train_loader, valid_loader = CIFAR10(50)
+    train_loader, valid_loader = CIFAR10(batch_size)
    
-    model = CompressNNModel(model,"cuszp","rel",1e-3,contiguous_float32_check,True)
+    model = CompressNNModel(model, batch_size, "./fixedcompress.json"contiguous_float32_check,True)
     loss_fn = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), 
                                 lr=0.01,

@@ -1,0 +1,13 @@
+{ "default": 
+    {
+        "compressor": "cpu"
+    },
+  "layer_type":
+    {
+        "Conv2d": {
+            "compressor": "cuszp",
+            "error_mode": "rel",
+            "error_bound": 1e-3
+        }
+    }
+}

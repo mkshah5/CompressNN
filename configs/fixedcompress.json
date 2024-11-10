@@ -1,0 +1,7 @@
+{ "default": 
+    {
+        "compressor": "cuszp",
+        "error_mode": "rel",
+        "error_bound": 1e-3
+    }
+}

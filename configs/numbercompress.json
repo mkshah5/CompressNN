@@ -1,0 +1,19 @@
+{ "default": 
+    {
+        "compressor": "cpu"
+    },
+  "layer_number":
+    {
+        "0": {
+            "compressor": "cuszp",
+            "error_mode": "rel",
+            "error_bound": 1e-3
+        },
+        "2": {
+            "compressor": "cuszp",
+            "error_mode": "rel",
+            "error_bound": 1e-4
+        }
+
+    }
+}

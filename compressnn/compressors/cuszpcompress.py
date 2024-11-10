@@ -38,10 +38,10 @@ class CUSZpCompressor(Compressor):
             if self.free_space:
                 del x
                 torch.cuda.empty_cache()
+            
         else:
             data = x
             
-        self.increment_tcount()
         return data
     
     ### Decompresses input tensor x if CompressedElement that was used by this compressor

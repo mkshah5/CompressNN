@@ -28,7 +28,6 @@ class CPUCompressor(Compressor):
         else:
             data = x
             
-        self.increment_tcount()
         return data
     
     ### Moves input tensor x to GPU if passes compress_check
