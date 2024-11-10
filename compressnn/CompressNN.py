@@ -28,7 +28,7 @@ class CompressNNModel(nn.Module):
         self.trace = Tracer(self.internal_model).trace().get_tensor_trace()
         self.composer = Composer(config_path, compress_check, self.trace, free_space, get_debug)
     def forward(self, x):
-        self.compressor.reset_tcount()
+        self.composer.tcount = 0
         with torch.autograd.graph.saved_tensors_hooks(
             self.pack_hook, self.unpack_hook
         ):
@@ -41,7 +41,4 @@ class CompressNNModel(nn.Module):
             return x
         
     def unpack_hook(self, x):
-        if x.shape[0] == self.batch_size:
-            return self.composer.decompress_pass(x)
-        else:
-            return x
+        return self.composer.decompress_pass(x)

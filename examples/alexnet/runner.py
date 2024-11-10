@@ -68,7 +68,7 @@ def main():
     model = AlexNetBaseline(10)
     train_loader, valid_loader = CIFAR10(batch_size)
    
-    model = CompressNNModel(model, batch_size, "./fixedcompress.json"contiguous_float32_check,True)
+    model = CompressNNModel(model, batch_size, "../../configs/numbercompress.json",contiguous_float32_check,True,False)
     loss_fn = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), 
                                 lr=0.01,
