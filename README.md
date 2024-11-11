@@ -23,7 +23,7 @@ pip install .
 Lastly, install CompressNN:
 
 ```
-cd ..           # go back to CompressNN root directory
+cd ../../           # go back to CompressNN root directory
 pip install .   # Install CompressNN
 ```
 
