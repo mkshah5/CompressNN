@@ -27,7 +27,9 @@ class CompressNNModel(nn.Module):
         self.internal_model = model
         self.batch_size = batch_size
     
-        self.trace = Tracer(self.internal_model, batch_size, input_shape).trace().get_tensor_trace()
+        tracer = Tracer(self.internal_model, batch_size, input_shape)
+        self.trace = tracer.trace().get_tensor_trace()
+        tracer.destroy()
         self.composer = Composer(config_path, compress_check, self.trace, free_space, get_debug)
     def forward(self, x):
         self.composer.tcount = 0
@@ -37,7 +39,7 @@ class CompressNNModel(nn.Module):
             return self.internal_model(x)
     
     def pack_hook(self, x):
-        if x.shape[0] == self.batch_size:
+        if x.shape[0] == self.batch_size and x.requires_grad and not isinstance(x, nn.Parameter):
             return self.composer.compress_pass(x)
         else:
             return x

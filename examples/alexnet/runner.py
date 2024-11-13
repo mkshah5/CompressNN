@@ -24,6 +24,7 @@ def train(model, train_loader, valid_loader, loss_function, optimizer):
             x = x.cuda()
             y = y.cuda()
             
+            optimizer.zero_grad()
             outputs = model(x)
             
             loss = loss_function(outputs,y)
@@ -53,8 +54,9 @@ def train(model, train_loader, valid_loader, loss_function, optimizer):
                 loss = loss_function(outputs,y)
                                 
                 total_loss += loss.mean()
+                _, predicted = torch.max(outputs.data,1)
                 total += y.size(0)
-                correct += (outputs == y).sum()
+                correct += (predicted == y).sum()
 
                 del loss
                 torch.cuda.empty_cache()

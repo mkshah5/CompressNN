@@ -18,7 +18,7 @@ class TracerModel(nn.Module):
         self.tcount = 0
         
     def forward(self, x):
-        self.internal_model
+        return self.internal_model(x)
 
     def destroy(self):
         del self.internal_model
@@ -35,12 +35,13 @@ class Tracer():
         for name, module in self.internal_model.named_modules():
             module.register_forward_hook(self.hook)
     def hook(self,module, input, output):
-        if input.shape[0] == self.batch_size:
-            self.module_order.append(module.__class__.__name__)
+        #if input[0].shape[0] == self.batch_size:
+        self.module_order.append(module.__class__.__name__)
 
     def trace(self):
         y = self.internal_model(torch.randn(self.input_shape))
         print(self.module_order)
+        i = 0
         for i in range(len(self.module_order)):
             self.map[i] = self.module_order[i]
         return self
