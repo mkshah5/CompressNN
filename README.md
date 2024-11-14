@@ -35,7 +35,7 @@ CompressNN wraps your PyTorch networks (`torch.nn.Module` objects) in a `Compres
 Check out `compressnn/compressors/cuszpcompress.py` and `compressnn/compressors/cpucompress.py` for source code and arguments required. Given variable `model` is a `torch.nn.Module`, do the following:
 
 ```
-model = CompressNNModel(model, <batch_size>, <config_path>,<compress_check>, <free_space>, <get_debug>)
+model = CompressNNModel(model, <batch_size>, <input_shape>, <config_path>,<compress_check>, <free_space>, <get_debug>)
 ```
 
 `model` should now be able to run like any other model, with the integration of compression.
@@ -66,7 +66,7 @@ from compressnn.utils import contiguous_float32_check
 and convert model as follows:
 
 ```
-model = CompressNNModel(model, batch_size, "../../configs/numbercompress.json",contiguous_float32_check,True,False)
+model = CompressNNModel(model, batch_size, (3,32,32), "../../configs/numbercompress.json",contiguous_float32_check,True,False)
 ```
 
 ## Notes
