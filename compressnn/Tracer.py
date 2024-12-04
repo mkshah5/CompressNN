@@ -25,13 +25,13 @@ class TracerModel(nn.Module):
         return
 
 class Tracer():
-    def __init__(self, model, batch_size, input_shape):
+    def __init__(self, model, batch_size, input_shapes):
         super(Tracer, self).__init__()
         self.internal_model = TracerModel(model)
         self.map = dict()
         self.module_order = []
         self.batch_size = batch_size
-        self.input_shape = (batch_size, )+input_shape
+        self.input_shapes = input_shapes
         for name, module in self.internal_model.named_modules():
             module.register_forward_hook(self.hook)
     def hook(self,module, input, output):
@@ -39,7 +39,11 @@ class Tracer():
         self.module_order.append(module.__class__.__name__)
 
     def trace(self):
-        y = self.internal_model(torch.randn(self.input_shape))
+        inputs = []
+        for shape in self.input_shapes:
+            inputs.append(torch.randn(shape))
+        inputs = tuple(inputs)
+        y = self.internal_model(*inputs)
         print(self.module_order)
         i = 0
         for i in range(len(self.module_order)):

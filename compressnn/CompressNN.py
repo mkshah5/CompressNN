@@ -15,19 +15,19 @@ __init__ Arguments:
 - model: torch.nn.Module to integrate compression with (torch.nn.Module)
 - compressor: compressor name (str)
 - batch_size: Batch size for training (int)
-- input_shape: Shape of input (tuple)
+- input_shapes: Tuple of shapes of inputs (tuple of tuple) Assumes that batch size is part of shape provided
 - config_path: Path to a compression JSON configuration file (str)
 - compress_check: function header that returns true when an activation should be compressed (function)
 - free_space: Frees original and compressed data appropriately (bool)
 - get_debug: Print debug information (bool)
 '''
 class CompressNNModel(nn.Module):
-    def __init__(self, model, batch_size, input_shape, config_path="./config.json",compress_check=contiguous_float32_check, free_space=True, get_debug=False):
+    def __init__(self, model, batch_size, input_shapes, config_path="./config.json",compress_check=contiguous_float32_check, free_space=True, get_debug=False):
         super(CompressNNModel, self).__init__()
         self.internal_model = model
         self.batch_size = batch_size
     
-        tracer = Tracer(self.internal_model, batch_size, input_shape)
+        tracer = Tracer(self.internal_model, batch_size, input_shapes)
         self.trace = tracer.trace().get_tensor_trace()
         tracer.destroy()
         self.composer = Composer(config_path, compress_check, self.trace, free_space, get_debug)
