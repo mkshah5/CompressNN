@@ -20,8 +20,9 @@ class NoCompressor(Compressor):
 
     ### Moves input tensor x to CPU if passes compress_check
     def compress(self, x):            
+        x = CompressedElement(x, x.numel(), x.shape, x.dtype, compress_type="nocompress")
         return x
     
     ### Moves input tensor x to GPU if passes compress_check
     def decompress(self, x):
-        return x
+        return x.compressed_data

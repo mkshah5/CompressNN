@@ -26,7 +26,8 @@ class Composer():
         self.compress_check = compress_check
         self.trace = trace
         self.compressor_trace = dict()
-
+        print("=== Generated Trace ===")
+        print(self.trace)
         for t in self.trace.keys():
             if "layer_type" in self.compress_config:
                 if self.trace[t] in self.compress_config["layer_type"]:
@@ -34,6 +35,7 @@ class Composer():
             
             if "layer_number" in self.compress_config:
                 if str(t) in self.compress_config["layer_number"]:
+
                     self.compressor_trace[t] = get_compressor(self.compress_config["layer_number"][str(t)], compress_check, free_space, get_debug)
 
             if t not in self.compressor_trace:

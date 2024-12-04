@@ -44,7 +44,6 @@ class Tracer():
             inputs.append(torch.randn(shape))
         inputs = tuple(inputs)
         y = self.internal_model(*inputs)
-        print(self.module_order)
         i = 0
         for i in range(len(self.module_order)):
             self.map[i] = self.module_order[i]
